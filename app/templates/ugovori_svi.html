@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% set title = "Svi ugovori" %}
+
+{% block content %}
+  <div class="top">
+    <h2>Svi ugovori</h2>
+    <a class="btn" href="{{ url_for('novi_ugovor') }}">+ Novi ugovor</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nekretnina</th>
+        <th>Vlasnik</th>
+        <th>Najmoprimac</th>
+        <th>Početak</th>
+        <th>Završetak</th>
+        <th>Najamnina</th>
+        <th>Status</th>
+        <th>Detalji</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in ugovori %}
+      <tr>
+        <td>{{ u.ugovor_id }}</td>
+        <td>{{ u.adresa }} ({{ u.tip_nekretnine }}, {{ u.povrsina }})</td>
+        <td>{{ u.vlasnik_ime_prezime }}</td>
+        <td>{{ u.najmoprimac_ime_prezime }}</td>
+        <td>{{ u.datum_pocetka }}</td>
+        <td>{{ u.datum_zavrsetka }}</td>
+        <td>{{ u.mjesecna_najamnina }}</td>
+        <td>{{ u.trenutni_status }}</td>
+        <td><a href="{{ url_for('ugovor_detalji', ugovor_id=u.ugovor_id) }}">detalji</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not ugovori %}
+    <p>Nema ugovora.</p>
+  {% endif %}
+{% endblock %}

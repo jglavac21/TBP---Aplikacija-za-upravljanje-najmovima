@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% set title = "Korisnici" %}
+
+{% block content %}
+  <div class="top">
+    <h2>Korisnici</h2>
+    <a class="btn" href="{{ url_for('korisnik_novi') }}">+ Novi korisnik</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Email</th>
+        <th>Tip</th>
+        <th>Datum kreiranja</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for k in korisnici %}
+      <tr>
+        <td>{{ k.korisnik_id }}</td>
+        <td>{{ k.ime }}</td>
+        <td>{{ k.prezime }}</td>
+        <td>{{ k.email }}</td>
+        <td>{{ k.tip_korisnika }}</td>
+        <td>{{ k.datum_kreiranja }}</td>
+        <td class="actions">
+          <a href="{{ url_for('korisnik_uredi', korisnik_id=k.korisnik_id) }}">Uredi</a>
+          <form method="post" action="{{ url_for('korisnik_obrisi', korisnik_id=k.korisnik_id) }}" style="display:inline;">
+            <button type="submit" onclick="return confirm('Obrisati korisnika #{{ k.korisnik_id }}?')">Obriši</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not korisnici %}
+    <p>Nema korisnika.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% set title = "Novi ugovor" %}
+
+{% block content %}
+  <h2>Novi ugovor</h2>
+
+  {% if not nekretnine or not korisnici %}
+    <div class="msg error">
+      Ne možeš dodati ugovor jer nedostaju podaci:
+      {% if not korisnici %} prvo dodaj barem jednog korisnika. {% endif %}
+      {% if not nekretnine %} prvo dodaj barem jednu nekretninu. {% endif %}
+    </div>
+
+    <div class="row">
+      <a class="btn" href="{{ url_for('korisnik_novi') }}">+ Novi korisnik</a>
+      <a class="btn" href="{{ url_for('nekretnina_nova') }}">+ Nova nekretnina</a>
+      <a class="btn" href="{{ url_for('index') }}">Natrag</a>
+    </div>
+  {% else %}
+    <form method="post">
+      <label>Nekretnina</label>
+      <select name="nekretnina_id" required>
+        {% for n in nekretnine %}
+          <option value="{{ n.nekretnina_id }}">{{ n.nekretnina_id }} - {{ n.adresa }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Najmoprimac (korisnik)</label>
+      <select name="najmoprimac_id" required>
+        {% for k in korisnici %}
+          <option value="{{ k.korisnik_id }}">{{ k.korisnik_id }} - {{ k.ime_prezime }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Datum početka</label>
+      <input type="date" name="datum_pocetka" required>
+
+      <label>Datum završetka</label>
+      <input type="date" name="datum_zavrsetka" required>
+
+      <label>Mjesečna najamnina</label>
+      <input type="number" step="0.01" name="mjesecna_najamnina" required>
+
+      <label>Polog</label>
+      <input type="number" step="0.01" name="polog" value="0">
+
+      <label>Napomena</label>
+      <textarea name="napomena" rows="3"></textarea>
+
+      <div class="row">
+        <button type="submit">Spremi</button>
+        <a class="btn" href="{{ url_for('index') }}">Odustani</a>
+      </div>
+    </form>
+  {% endif %}
+{% endblock %}

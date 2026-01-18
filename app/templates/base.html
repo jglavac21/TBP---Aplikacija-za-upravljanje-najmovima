@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title or "Upravljanje najmovima" }}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    nav { display:flex; gap:12px; align-items:center; margin-bottom:16px; flex-wrap: wrap; }
+    nav a { text-decoration:none; padding:8px 10px; border:1px solid #333; border-radius:10px; }
+    nav a:hover { background:#f3f3f3; }
+    h1, h2 { margin: 0 0 12px 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
+    th { background: #f3f3f3; text-align: left; }
+    .top { display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap: wrap; }
+    .btn { display:inline-block; padding:8px 12px; border:1px solid #333; border-radius:10px; text-decoration:none; background:white; }
+    .btn:hover { background:#f3f3f3; }
+    form { max-width: 560px; }
+    label { display:block; margin-top:10px; font-weight: 600; }
+    input, select, textarea { width: 100%; padding: 8px; margin-top: 6px; }
+    .row { margin-top: 14px; display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
+    .msg { padding:10px; margin:10px 0; border-radius:10px; }
+    .success { background:#e9fbe9; border:1px solid #b9e7b9; }
+    .error { background:#ffecec; border:1px solid #f3b6b6; }
+    .muted { color:#666; }
+    .actions a, .actions button { margin-right: 8px; }
+    button { cursor:pointer; padding:8px 12px; border:1px solid #333; border-radius:10px; background:white; }
+    button:hover { background:#f3f3f3; }
+    code { background:#f6f6f6; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="{{ url_for('index') }}">Aktivni ugovori</a>
+    <a href="{{ url_for('svi_ugovori') }}">Svi ugovori</a>
+    <a href="{{ url_for('novi_ugovor') }}">Novi ugovor</a>
+    <a href="{{ url_for('korisnici') }}">Korisnici</a>
+    <a href="{{ url_for('nekretnine') }}">Nekretnine</a>
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for cat, msg in messages %}
+        <div class="msg {{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>

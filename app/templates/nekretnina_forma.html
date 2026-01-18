@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set title = naslov %}
+
+{% block content %}
+  <h2>{{ naslov }}</h2>
+
+  {% if not korisnici %}
+    <div class="msg error">
+      Ne možeš dodati/urediti nekretninu jer nema korisnika (vlasnika). Prvo dodaj korisnika.
+    </div>
+    <div class="row">
+      <a class="btn" href="{{ url_for('korisnik_novi') }}">+ Novi korisnik</a>
+      <a class="btn" href="{{ url_for('nekretnine') }}">Natrag</a>
+    </div>
+  {% else %}
+    <form method="post">
+      <label>Adresa</label>
+      <input name="adresa" value="{{ nekretnina.adresa if nekretnina else '' }}" required>
+
+      <label>Tip nekretnine</label>
+      {% set tip = nekretnina.tip_nekretnine if nekretnina else '' %}
+      <select name="tip_nekretnine" required>
+        <option value="stan" {{ 'selected' if tip=='stan' else '' }}>stan</option>
+        <option value="kuca" {{ 'selected' if tip=='kuca' else '' }}>kuca</option>
+        <option value="poslovni_prostor" {{ 'selected' if tip=='poslovni_prostor' else '' }}>poslovni_prostor</option>
+        <option value="ostalo" {{ 'selected' if tip=='ostalo' else '' }}>ostalo</option>
+      </select>
+
+      <label>Površina (m2)</label>
+      <input type="number" step="0.01" name="povrsina" value="{{ nekretnina.povrsina if nekretnina else '' }}" required>
+
+      <label>Vlasnik</label>
+      <select name="vlasnik_id" required>
+        {% for k in korisnici %}
+          {% set sel = (nekretnina and (k.korisnik_id == nekretnina.vlasnik_id)) %}
+          <option value="{{ k.korisnik_id }}" {{ 'selected' if sel else '' }}>
+            {{ k.korisnik_id }} - {{ k.ime_prezime }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <div class="row">
+        <button type="submit">Spremi</button>
+        <a class="btn" href="{{ url_for('nekretnine') }}">Odustani</a>
+      </div>
+    </form>
+  {% endif %}
+{% endblock %}

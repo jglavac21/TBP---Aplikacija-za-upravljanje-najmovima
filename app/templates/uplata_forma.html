@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% set title = "Nova uplata" %}
+
+{% block content %}
+  <h2>Nova uplata (ugovor #{{ ugovor_id }})</h2>
+
+  <form method="post">
+    <label>Iznos</label>
+    <input type="number" step="0.01" name="iznos" required>
+
+    <label>Datum uplate</label>
+    <input type="date" name="datum_uplate" required>
+
+    <label>Razdoblje (prvi dan u mjesecu)</label>
+    <input type="date" name="razdoblje" required>
+
+    <div class="row">
+      <button type="submit">Spremi</button>
+      <a class="btn" href="{{ url_for('uplate', ugovor_id=ugovor_id) }}">Odustani</a>
+    </div>
+  </form>
+
+  <p class="muted">
+    Primjer: za siječanj 2026 unesi <code>2026-01-01</code>.
+  </p>
+{% endblock %}

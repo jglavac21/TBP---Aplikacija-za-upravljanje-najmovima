@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% set title = "Nekretnine" %}
+
+{% block content %}
+  <div class="top">
+    <h2>Nekretnine</h2>
+    <a class="btn" href="{{ url_for('nekretnina_nova') }}">+ Nova nekretnina</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Adresa</th>
+        <th>Tip</th>
+        <th>Površina</th>
+        <th>Vlasnik</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in nekretnine %}
+      <tr>
+        <td>{{ n.nekretnina_id }}</td>
+        <td>{{ n.adresa }}</td>
+        <td>{{ n.tip_nekretnine }}</td>
+        <td>{{ n.povrsina }}</td>
+        <td>{{ n.vlasnik_ime_prezime }} (ID {{ n.vlasnik_id }})</td>
+        <td class="actions">
+          <a href="{{ url_for('nekretnina_uredi', nekretnina_id=n.nekretnina_id) }}">Uredi</a>
+          <form method="post" action="{{ url_for('nekretnina_obrisi', nekretnina_id=n.nekretnina_id) }}" style="display:inline;">
+            <button type="submit" onclick="return confirm('Obrisati nekretninu #{{ n.nekretnina_id }}?')">Obriši</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not nekretnine %}
+    <p>Nema nekretnina.</p>
+  {% endif %}
+{% endblock %}

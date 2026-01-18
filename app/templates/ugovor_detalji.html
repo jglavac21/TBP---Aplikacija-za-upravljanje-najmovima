@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set title = "Detalji ugovora" %}
+
+{% block content %}
+  <div class="top">
+    <h2>Detalji ugovora #{{ ugovor.ugovor_id }}</h2>
+    <a class="btn" href="{{ url_for('svi_ugovori') }}">Natrag na sve ugovore</a>
+  </div>
+
+  <p><b>Status:</b> {{ ugovor.trenutni_status }}</p>
+  <p><b>Nekretnina:</b> {{ ugovor.adresa }} ({{ ugovor.tip_nekretnine }}, {{ ugovor.povrsina }})</p>
+  <p><b>Vlasnik:</b> {{ ugovor.vlasnik_ime_prezime }}</p>
+  <p><b>Najmoprimac:</b> {{ ugovor.najmoprimac_ime_prezime }}</p>
+  <p><b>Razdoblje:</b> {{ ugovor.datum_pocetka }} → {{ ugovor.datum_zavrsetka }}</p>
+  <p><b>Mjesečna najamnina:</b> {{ ugovor.mjesecna_najamnina }}</p>
+  <p><b>Polog:</b> {{ ugovor.polog }}</p>
+  {% if ugovor.napomena %}<p><b>Napomena:</b> {{ ugovor.napomena }}</p>{% endif %}
+
+  <div class="row">
+    <a class="btn" href="{{ url_for('statusi', ugovor_id=ugovor.ugovor_id) }}">Statusi</a>
+    <a class="btn" href="{{ url_for('uplate', ugovor_id=ugovor.ugovor_id) }}">Uplate</a>
+
+    {% if ugovor.trenutni_status == 'AKTIVAN' and ugovor.datum_pocetka <= today %}
+    <form method="post" action="{{ url_for('ugovor_raskini', ugovor_id=ugovor.ugovor_id) }}" style="display:inline;">
+      <button type="submit" onclick="return confirm('Raskinuti ugovor #{{ ugovor.ugovor_id }}?')">
+        Raskini ugovor
+      </button>
+    </form>
+    {% endif %}
+  </div>
+{% endblock %}

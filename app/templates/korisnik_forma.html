@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% set title = naslov %}
+
+{% block content %}
+  <h2>{{ naslov }}</h2>
+
+  <form method="post">
+    <label>Ime</label>
+    <input name="ime" value="{{ korisnik.ime if korisnik else '' }}" required>
+
+    <label>Prezime</label>
+    <input name="prezime" value="{{ korisnik.prezime if korisnik else '' }}" required>
+
+    <label>Email</label>
+    <input type="email" name="email" value="{{ korisnik.email if korisnik else '' }}" required>
+
+    <label>Tip korisnika</label>
+    <select name="tip_korisnika" required>
+      {% set tip = korisnik.tip_korisnika if korisnik else '' %}
+      <option value="najmodavac" {{ 'selected' if tip=='najmodavac' else '' }}>najmodavac</option>
+      <option value="najmoprimac" {{ 'selected' if tip=='najmoprimac' else '' }}>najmoprimac</option>
+      <option value="oboje" {{ 'selected' if tip=='oboje' else '' }}>oboje</option>
+    </select>
+
+    <div class="row">
+      <button type="submit">Spremi</button>
+      <a class="btn" href="{{ url_for('korisnici') }}">Odustani</a>
+    </div>
+  </form>
+{% endblock %}

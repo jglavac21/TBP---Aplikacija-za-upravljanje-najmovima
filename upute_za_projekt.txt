@@ -1,0 +1,85 @@
+Aplikacija za upravljanje najmovima
+Projekt – Teorija baza podataka (TBP)
+
+Autor: Jakov Glavač
+Kolegij: Teorija baza podataka
+Mentor: Tomislav Peharda
+Godina: 2026
+
+------------------------------------------------------------
+OPIS PROJEKTA
+------------------------------------------------------------
+Ovaj projekt predstavlja web aplikaciju za upravljanje najmovima
+nekretnina. Sustav omogućuje upravljanje korisnicima, nekretninama,
+ugovorima o najmu i uplatama, uz primjenu naprednih mehanizama baze
+podataka poput aktivnih okidača i temporalnog praćenja statusa ugovora.
+
+Baza podataka implementirana je u PostgreSQL-u, dok je aplikacijski
+sloj razvijen korištenjem programskog jezika Python i web okvira Flask.
+
+------------------------------------------------------------
+TEHNOLOGIJE
+------------------------------------------------------------
+- PostgreSQL
+- Python 3
+- Flask
+- HTML
+- Bash
+- LaTeX
+
+------------------------------------------------------------
+STRUKTURA PROJEKTA
+------------------------------------------------------------
+schema.sql                  – definicija baze podataka
+unos_testnih_podataka.sql   – testni podaci (opcionalno)
+install.sh                  – instalacijska skripta
+README.txt                  – upute za pokretanje
+app/
+  app.py                    – glavna aplikacija
+  templates/                – HTML predlošci
+
+------------------------------------------------------------
+INSTALACIJA
+------------------------------------------------------------
+Projekt je testiran u Linux okruženju (Ubuntu).
+
+1. Pozicionirati se u korijenski direktorij projekta
+2. Omogućiti izvođenje instalacijske skripte:
+   chmod +x install.sh
+
+3. Pokrenuti instalacijsku skriptu:
+   ./install.sh
+
+Skripta automatski:
+- instalira potrebne pakete (ako nedostaju)
+- kreira bazu podataka i korisnika
+- učitava schema.sql
+- po potrebi učitava testne podatke
+- priprema Python virtualno okruženje
+
+------------------------------------------------------------
+POKRETANJE APLIKACIJE
+------------------------------------------------------------
+1. Aktivirati virtualno okruženje:
+   source .venv/bin/activate
+
+2. Postaviti varijable okruženja:
+   export $(cat .env | xargs)
+
+3. Pokrenuti aplikaciju:
+   python app/app.py
+
+4. Otvoriti web preglednik i posjetiti:
+   http://localhost:5000
+
+------------------------------------------------------------
+NAPOMENA O TESTNIM PODACIMA
+------------------------------------------------------------
+Datoteka unos_testnih_podataka.sql sadrži testne podatke koji se
+mogu koristiti za demonstraciju funkcionalnosti sustava. Njeno
+učitavanje nije obavezno za pokretanje aplikacije.
+
+------------------------------------------------------------
+LICENCA
+------------------------------------------------------------
+Izvorni kod dostupan je pod GNU General Public License v3.0 (GPLv3).

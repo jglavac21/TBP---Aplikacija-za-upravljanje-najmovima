@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% set title = "Uplate" %}
+
+{% block content %}
+  <div class="top">
+    <h2>Uplate za ugovor #{{ ugovor_id }}</h2>
+    <a class="btn" href="{{ url_for('ugovor_detalji', ugovor_id=ugovor_id) }}">Natrag</a>
+    <a class="btn" href="{{ url_for('uplata_nova', ugovor_id=ugovor_id) }}">+ Nova uplata</a>
+  </div>
+
+  <table style="max-width: 900px;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Iznos</th>
+        <th>Datum uplate</th>
+        <th>Razdoblje</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in uplate %}
+      <tr>
+        <td>{{ p.uplata_id }}</td>
+        <td>{{ p.iznos }}</td>
+        <td>{{ p.datum_uplate }}</td>
+        <td>{{ p.razdoblje }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not uplate %}
+    <p>Nema uplata za ovaj ugovor.</p>
+  {% endif %}
+
+  <p class="muted">
+    Napomena: Datum uplate ne može biti postavljen prije početka ugovora.
+  </p>
+{% endblock %}
